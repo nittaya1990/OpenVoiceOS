@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-SNAPCAST_VERSION = v0.25.0
+SNAPCAST_VERSION = v0.26.0
 SNAPCAST_SITE = $(call github,badaix,snapcast,$(SNAPCAST_VERSION))
 SNAPCAST_DEPENDENCIES = libogg alsa-lib avahi # libstdcpp libatomic libflac libvorbisidec
 SNAPCAST_LICENSE = GPL-3.0+
@@ -20,6 +20,7 @@ define SNAPSERVER_INSTALL_CONFIG
 	mkdir -p $(TARGET_DIR)/etc/snapcast
 	$(INSTALL) -m 0755 -D $(@D)/debian/snapserver.default $(TARGET_DIR)/etc/snapcast/snapserver
 	$(INSTALL) -m 0755 -D $(@D)/server/etc/snapserver.conf $(TARGET_DIR)/etc/
+	chmod +r $(TARGET_DIR)/usr/share/snapserver/plug-ins/meta_mpd.py
 endef
 
 
