@@ -235,7 +235,7 @@ index c8f681cb07ca..17bd6cfc0e01 100644
 +
 +static int xmos_xvf3510_init(struct snd_soc_pcm_runtime *rtd)
 +{
-+	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
++	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtd, 0);
 +	struct gpio_desc *pwr_gpio, *rst_gpio;
 +	struct clk *mclk;
 +	int rate, ret;
