@@ -45,9 +45,9 @@ copy_board_specific_files() {
 
     case "${BOARD_TYPE}" in
         "rpi3"|"rpi4"|"rpi5")
-            cp -f "${BOARD_DIR}/../cmdline.txt" "${BINARIES_DIR}/rpi-firmware/cmdline.txt"
-            cp -f "${BOARD_DIR}/config.txt" "${BINARIES_DIR}/rpi-firmware/config.txt"
-            cp -f "${BOARD_DIR}/RPI_EFI.fd" "${BINARIES_DIR}/rpi-firmware/RPI_EFI.fd"
+            cp -f "${BOARD_DIR}/../cmdline.txt" "${BINARIES_DIR}/cmdline.txt"
+            cp -f "${BOARD_DIR}/config.txt" "${BINARIES_DIR}/config.txt"
+            cp -rf "${BOARD_DIR}/uefi" "${BINARIES_DIR}/"
             cp -f "${BOARD_DIR}/../grub-efi.cfg" "${BINARIES_DIR}/efi-part/EFI/BOOT/grub.cfg"
             cp -f "${BOARD_DIR}/sw-description" "${BINARIES_DIR}"
             ;;
@@ -66,11 +66,12 @@ copy_board_specific_files() {
 handle_kernel_renaming() {
     case "${BOARD_TYPE}" in
         "rpi3"|"rpi4"|"rpi5")
-            grub-editenv "${BINARIES_DIR}/efi-part/EFI/BOOT/grubenv" create
-            if [ -f "${TARGET_DIR}/boot/Image" ]; then
-                echo "Found Image, renaming to kernel"
-                mv "${TARGET_DIR}/boot/Image" "${TARGET_DIR}/boot/kernel"
-            fi
+            grub-editenv "${BINARIES_DIR}/efi-part/EFI/BOOT/grub.env" create
+            #if [ -f "${TARGET_DIR}/boot/Image" ]; then
+            #    echo "Found Image, symlinking to kernel"
+            #    # rm -f "${TARGET_DIR}/boot/kernel"
+            #    ln -sf "${TARGET_DIR}/boot/Image" kernel
+            #fi
             ;;
         "ova"|"pc")
             grub-editenv "${BINARIES_DIR}/efi-part/EFI/BOOT/grubenv" create
